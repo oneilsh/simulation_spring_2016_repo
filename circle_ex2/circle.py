@@ -5,15 +5,18 @@ class Circle:
         self.d = d
         self.speed = speed_vec
         self.acceleration = PVector(0, 0.5)
+        
 
     def draw(self):
-        fill(200, 50, 50)
-        stroke(50, 50, 200)
+        fill(150, 150, 150, 150)
+        stroke(0, 0, 0, 100)
         ellipse(self.pos.x, self.pos.y, self.d, self.d)
     
     def move(self):
         self.speed = self.speed + self.acceleration
         self.pos = self.pos + self.speed
+        
+        
         
         if self.pos.y + self.d/2 >= height:
             self.speed.y = self.speed.y * -1

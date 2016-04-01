@@ -1,13 +1,22 @@
 from circle import Circle
+import random
 
 class Controller:
     def __init__(self):
-        self.circlea = Circle(PVector(width/2, height/2), 100, PVector(1, 1))
-        self.circleb = Circle(PVector(width/2, height/2), 100, PVector(3, 3))
+        self.circles = list()
+        for i in range(0, 10):
+            rlocx = random.random() * width
+            rlocy = random.random() * height
+            rspx = random.random() * 2
+            rspy = random.random() * 2
+            rd = random.random() * 50 + 10
+            newcircle = Circle(PVector(rlocx, rlocy), rd, PVector(rspy, rspy))
+            self.circles.append(newcircle)
     
     def draw(self):
         background(0, 0, 0)
-        self.circlea.draw()
-        self.circleb.draw()
-        self.circlea.move()
-        self.circleb.move()
+
+        for circle in self.circles:
+            circle.draw()
+            circle.move()
+
