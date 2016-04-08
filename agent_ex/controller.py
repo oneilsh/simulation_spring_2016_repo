@@ -1,14 +1,13 @@
 from agent import Agent
-import random
 
 class Controller:
 
     def __init__(self):
         self.agents = list()
         for i in range(0, 10): 
-            rspx = (random.random() - 0.5)*2
-            rspy = (random.random() - 0.5)*2
-            rmaxsp = random.random() * 4
+            rspx = random(-3, 3)
+            rspy = random(-3, 3)
+            rmaxsp = random(2, 2.1)  # processing built-in random
             newagent = Agent(PVector(width/2, height/2), PVector(rspx, rspy), rmaxsp)
             self.agents.append(newagent)
 

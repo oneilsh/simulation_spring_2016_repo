@@ -1,7 +1,7 @@
 from controller import Controller
 
 def setup():
-    size(600, 400, FX2D)
+    size(600, 400)
     global controller
     controller = Controller()
   
