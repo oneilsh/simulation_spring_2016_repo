@@ -1,7 +1,7 @@
 from controller import Controller
 
 def setup():
-    size(600, 400)
+    size(800, 600)
     global controller
     controller = Controller()
   
