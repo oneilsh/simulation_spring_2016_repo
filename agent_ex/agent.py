@@ -38,7 +38,7 @@ class Agent:
         align = self.align_force(neighbors)
         self.apply_force(align)
         cohesion = self.cohesion_force(neighbors)
-        self.apply_force(cohesion * 0.3)
+        self.apply_force(cohesion)
 
     def cohesion_force(self, neighbors):
         sum = PVector(0, 0)
