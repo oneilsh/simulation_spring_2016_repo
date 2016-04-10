@@ -7,6 +7,7 @@ class Agent:
         self.max_speed = max_speed
         self.max_force = max_force
         self.sight_distance = sight_dist
+        self.sum = PVector(0, 0)   # for temporary use by methods
         
         # Acceleration is 0 by default
         self.acceleration = PVector(0, 0)
@@ -15,8 +16,11 @@ class Agent:
         
     def seek(self, target_vec):
         desiredspeed = target_vec - self.pos
+        distance = desiredspeed.mag()
         desiredspeed.normalize()
-        desiredspeed = desiredspeed * self.max_speed
+        desiredspeed.mult(self.max_speed)
+        if distance < 50:
+            desiredspeed.mult(distance/50)
         
         steerforce = desiredspeed - self.speed
         self.apply_force(steerforce)
@@ -41,41 +45,41 @@ class Agent:
         self.apply_force(cohesion)
 
     def cohesion_force(self, neighbors):
-        sum = PVector(0, 0)
+        self.sum.limit(0)
         for agent in neighbors:
-            sum = sum + agent.pos
+            self.sum.add(agent.pos)
             
         if len(neighbors) > 0:
-            center = sum/len(neighbors)
+            center = self.sum/len(neighbors)
             desiredspeed = center - self.pos
             return self.desired_to_force(desiredspeed)
         else:
-            return PVector(0, 0)
+            return self.sum
 
     def align_force(self, neighbors):
-        sum = PVector(0, 0)
+        self.sum.limit(0)
         for agent in neighbors:
-            sum = sum + agent.speed
+            self.sum.add(agent.speed)
             
         if len(neighbors) > 0:
-            desiredspeed = sum/len(neighbors)
+            desiredspeed = self.sum/len(neighbors)
             return self.desired_to_force(desiredspeed)
         else:
-            return PVector(0, 0)
+            return self.sum
         
     def separate_force(self, neighbors):
-        sum = PVector(0, 0)
+        self.sum.limit(0)
         for agent in neighbors:
             diffvec = self.pos - agent.pos
             distance = diffvec.mag()
             diffvec.normalize()
-            sum = sum + diffvec / (distance + 0.0001)  # avoid div by 0
+            self.sum.add(diffvec / (distance + 0.0001))  # avoid div by 0
             
         if len(neighbors) > 0:
-            desiredspeed = sum/len(neighbors)
-            return self.desired_to_force(desiredspeed)
+            self.sum.div(len(neighbors))
+            return self.desired_to_force(self.sum)
         else:
-            return PVector(0, 0)   # no neighbors, no force
+            return self.sum   # no neighbors, no force
    
     def desired_to_force(self, desired):
         desiredcopy = desired.get() # make a copy first
@@ -87,10 +91,11 @@ class Agent:
         
     # f = ma, equivalently a = f/m
     def apply_force(self, force_vec):
-        self.acceleration = self.acceleration + force_vec / self.mass
+        force_vec.div(self.mass)
+        self.acceleration.add(force_vec)
 
     def reset_acceleration(self):
-        self.acceleration = self.acceleration * 0
+        self.acceleration.limit(0)
 
     def draw(self):
         fill(150, 150, 150, 150)
@@ -111,13 +116,13 @@ class Agent:
         rotate(PI/8)
         line(0, 0, 40, 0)
         popMatrix()
-        line(0, 0, 40, 0)
+        #line(0, 0, 40, 0)
         popMatrix()
     
     def move(self):
-        self.speed = self.speed + self.acceleration
+        self.speed.add(self.acceleration)
         self.speed.limit(self.max_speed)
-        self.pos = self.pos + self.speed
+        self.pos.add(self.speed)
         
         self.fix_position()
         
