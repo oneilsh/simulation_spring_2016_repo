@@ -1,7 +1,7 @@
 
 class Agent:
 
-    def __init__(self, pos_vec, speed_vec, max_speed, max_force, sight_dist):
+    def __init__(self, pos_vec, speed_vec, max_speed, max_force, sight_dist, r, g, b):
         self.pos = pos_vec
         self.speed = speed_vec
         self.max_speed = max_speed
@@ -13,6 +13,9 @@ class Agent:
         self.acceleration = PVector(0, 0)
         # boring mass
         self.mass = 1.0
+        self.r = r
+        self.g = g
+        self.b = b
         
     def seek(self, target_vec):
         desiredspeed = target_vec - self.pos
@@ -98,7 +101,7 @@ class Agent:
         self.acceleration.limit(0)
 
     def draw(self):
-        fill(150, 150, 150, 150)
+        fill(self.r, self.g, self.b, 150)
         stroke(0, 0, 0, 100)
         # ellipse(self.pos.x, self.pos.y, 10, 10)
         # rect(self.pos.x - 15, self.pos.y - 5, 30, 10)
