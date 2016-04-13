@@ -1,19 +1,6 @@
 from agent import Agent
 
-class MouseFollower(Agent): 
-    
-    
-    def cognate(self, allagents):
-        mousepos = self.findmouse()
-        tomouse = self.pos - mousepos
-        if tomouse.mag() < self.sight_distance:
-            self.seek(mousepos)
-        else:
-            self.seek(PVector(width/2, height/2))
-    
-    def findmouse(self):
-        return PVector(mouseX, mouseY)
-    
+class MouseFollower(Agent):
     
     def draw(self):
         fill(200, 50, 50, 150)
@@ -36,3 +23,16 @@ class MouseFollower(Agent):
         popMatrix()
         #line(0, 0, 40, 0)
         popMatrix()
+        
+    def findmouse(self):
+        return PVector(mouseX, mouseY)
+    
+    def cognate(self, allagents):
+        mousepos = self.findmouse()
+        tomouse = self.pos - mousepos
+        if tomouse.mag() < self.sight_distance:
+            self.seek(mousepos)
+        else:
+            self.seek(PVector(width/2, height/2))
+            
+            

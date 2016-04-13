@@ -8,14 +8,14 @@ class Agent:
         self.max_force = max_force
         self.sight_distance = sight_dist
         self.sum = PVector(0, 0)   # for temporary use by methods
+        self.r = r
+        self.g = g
+        self.b = b
         
         # Acceleration is 0 by default
         self.acceleration = PVector(0, 0)
         # boring mass
         self.mass = 1.0
-        self.r = r
-        self.g = g
-        self.b = b
         
     def seek(self, target_vec):
         desiredspeed = target_vec - self.pos
