@@ -3,7 +3,7 @@ import time
 
 class Controller:
     def __init__(self):
-        self.caboard = CaBoard(50)
+        self.caboard = CaBoard(50, 50)
     
     def draw(self):
         self.caboard.draw()
