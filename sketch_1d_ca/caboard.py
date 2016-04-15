@@ -11,13 +11,20 @@ class CaBoard:
         middle_cell.set_state(1)
         
     def draw(self):
+        stroke(0, 0, 0)
+        cellwidth = width/self.numcells
         for cell in self.currentgen:
             if cell.state == 1:
-                sys.stdout.write("#")
+                fill(200, 200, 200)
             else:
-                sys.stdout.write("_")
+                fill(80, 80, 80)
                 
-        sys.stdout.write("\n")
+            xpos = cell.pos * cellwidth
+            ypos = (self.gen_number * cellwidth) % height
+
+            rect(xpos, ypos, cellwidth, cellwidth)
+        
+
         
     def update(self):
         temp = self.lastgen

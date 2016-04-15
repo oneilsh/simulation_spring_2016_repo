@@ -8,4 +8,4 @@ class Controller:
     def draw(self):
         self.caboard.draw()
         self.caboard.update()
-        #time.sleep(0.1)
+        time.sleep(0.1)
