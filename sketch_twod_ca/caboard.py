@@ -15,6 +15,16 @@ class CaBoard:
                     cell = self.currentgen[rownum][colnum]
                     cell.set_state(1)
             
+    def change_state(self, x, y):
+        cellwidth = width/self.numcols
+        cellheight = height/self.numrows
+        col = int(x/cellwidth)
+        row = int(y/cellheight)
+        cell = self.currentgen[row][col]
+        if cell.state == 1:
+            cell.set_state(0)
+        else:
+            cell.set_state(1)
         
     def draw(self):
         cellwidth = width/self.numcols

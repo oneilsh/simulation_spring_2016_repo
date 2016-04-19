@@ -1,5 +1,6 @@
 from agent import Agent
 from mousefollower import MouseFollower
+from voronoi import voronoi_segments
 
 class Flock:
 
@@ -41,4 +42,13 @@ class Flock:
             agent.move()
             agent.reset_acceleration()
             
+        positions = list()
+        for agent in self.agents:
+            positions.append(agent.pos)
+            
+        v_segments = voronoi_segments(positions, 0, 0, width, height)
+        stroke(self.r, self.g, self.b)
+        for seg in v_segments:
+            line(seg[0], seg[1], seg[2], seg[3])
+       
             

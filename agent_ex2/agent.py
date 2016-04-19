@@ -101,6 +101,9 @@ class Agent:
         self.acceleration.limit(0)
 
     def draw(self):
+        fill(0, 0, 0, 0)
+        stroke(200, 200, 200)
+        ellipse(self.pos.x, self.pos.y, self.sight_distance, self.sight_distance)
         fill(self.r, self.g, self.b, 150)
         stroke(0, 0, 0, 100)
         # ellipse(self.pos.x, self.pos.y, 10, 10)
